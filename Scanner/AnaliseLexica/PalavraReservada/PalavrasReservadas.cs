@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Scanner.PalavrasReservada
+namespace Scanner.AnaliseLexica.PalavraReservada
 {
     public class PalavrasReservada
     {

@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnaliseLexica\Lexer.cs" />
-    <Compile Include="AnaliseLexica\PalavrasReservada\PalavrasReservada.cs" />
+    <Compile Include="AnaliseLexica\PalavraReservada\PalavrasReservadas.cs" />
     <Compile Include="AnaliseLexica\TabelaSimbolo\Simbolo.cs" />
     <Compile Include="AnaliseLexica\TabelaSimbolo\TabelaSimbolos.cs" />
     <Compile Include="UI\Scanner.cs">

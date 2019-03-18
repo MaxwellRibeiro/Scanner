@@ -1,6 +1,8 @@
-﻿using Scanner.TabelaSimbolo;
-using Scanner.PalavrasReservada;
+﻿using Scanner.AnaliseLexica.PalavraReservada;
+using Scanner.TabelaSimbolo;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Scanner.AnaliseLexica
@@ -11,7 +13,14 @@ namespace Scanner.AnaliseLexica
         private char[] programafonte;
         private int i;
 
-        TabelaSimbolos tabelaSimbolos;
+        private string[] InicioOperadores = {
+            "+","-",
+            "*","/",
+            ">","<",
+            "=","!"
+        };
+        
+        public TabelaSimbolos tabelaSimbolos;
 
         public Lexer(char[] programa)
         {
@@ -65,7 +74,7 @@ namespace Scanner.AnaliseLexica
             //Identificador
             if (Char.IsLetter(peek))
             {
-                PalavrasReservada palavraReservada = new PalavrasReservada();
+                PalavrasReservada palavrasReservada = new PalavrasReservada();
 
                 StringBuilder lexema = new StringBuilder();
                 do
@@ -74,7 +83,7 @@ namespace Scanner.AnaliseLexica
                     nextChar();
                 } while (Char.IsLetterOrDigit(peek));
 
-                if (palavraReservada.isPalavraReservada(lexema.ToString()))
+                if (palavrasReservada.isPalavraReservada(lexema.ToString()))
                 {
                     token = "<" + lexema.ToString() + ", " + lexema.ToString() + ">";
                 }
@@ -87,20 +96,19 @@ namespace Scanner.AnaliseLexica
             }
 
             //Operador
-            if (Arrays.stream(InicioOperadores).anyMatch(Character.toString(peek)::equals))
+            if (InicioOperadores.FirstOrDefault(i => i == Char.ToString(peek)) != null)
             {
                 StringBuilder lexema = new StringBuilder();
-                lexema.append(peek);
-                if (Character.toString(peek).equals("=") ||
-                    Character.toString(peek).equals("!") ||
-                    Character.toString(peek).equals(">") ||
-                    Character.toString(peek).equals("<")
-                )
+                lexema.Append(peek);
+                if (Char.ToString(peek) == "=" ||
+                    Char.ToString(peek) == "!" ||
+                    Char.ToString(peek) == ">" ||
+                    Char.ToString(peek) == "<" )
                 {
                     nextChar();
-                    if (Character.toString(peek).equals("="))
+                    if (Char.ToString(peek) == "=")
                     {
-                        lexema.append(peek);
+                        lexema.Append(peek);
                         nextChar();
                     }
                 }
@@ -109,12 +117,12 @@ namespace Scanner.AnaliseLexica
                     nextChar();
                 }
 
-                token = "<OP, " + lexema.toString() + ">";
+                token = "<OP, " + lexema.ToString() + ">";
 
                 return token;
             }
 
-            token = String.valueOf(peek);
+            token = peek.ToString();
             return token;
         }
     }

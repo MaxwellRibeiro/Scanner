@@ -5,7 +5,7 @@ namespace Scanner.TabelaSimbolo
 {
     public class TabelaSimbolos
     {
-        private List<Simbolo> simbolos;
+        public List<Simbolo> simbolos;
 
         public TabelaSimbolos()
         {
