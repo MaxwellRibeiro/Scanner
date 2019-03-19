@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Scanner));
             this.gbPrograma = new System.Windows.Forms.GroupBox();
+            this.txtPrograma = new System.Windows.Forms.TextBox();
             this.btCompilar = new MetroFramework.Controls.MetroButton();
             this.gbToken = new System.Windows.Forms.GroupBox();
             this.txtResultadoToken = new System.Windows.Forms.RichTextBox();
@@ -39,7 +40,8 @@
             this.bdTabelaSimbolo = new System.Windows.Forms.BindingSource(this.components);
             this.pcLerTxt = new System.Windows.Forms.PictureBox();
             this.lblLerTxt = new MetroFramework.Controls.MetroLabel();
-            this.txtPrograma = new System.Windows.Forms.TextBox();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.gbPrograma.SuspendLayout();
             this.gbToken.SuspendLayout();
             this.gbTabelaSimbolo.SuspendLayout();
@@ -57,6 +59,17 @@
             this.gbPrograma.TabIndex = 4;
             this.gbPrograma.TabStop = false;
             this.gbPrograma.Text = " Programa ";
+            // 
+            // txtPrograma
+            // 
+            this.txtPrograma.BackColor = System.Drawing.SystemColors.Window;
+            this.txtPrograma.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPrograma.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPrograma.Location = new System.Drawing.Point(3, 16);
+            this.txtPrograma.Multiline = true;
+            this.txtPrograma.Name = "txtPrograma";
+            this.txtPrograma.Size = new System.Drawing.Size(556, 373);
+            this.txtPrograma.TabIndex = 0;
             // 
             // btCompilar
             // 
@@ -84,6 +97,7 @@
             this.txtResultadoToken.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtResultadoToken.Location = new System.Drawing.Point(3, 16);
             this.txtResultadoToken.Name = "txtResultadoToken";
+            this.txtResultadoToken.ReadOnly = true;
             this.txtResultadoToken.Size = new System.Drawing.Size(339, 370);
             this.txtResultadoToken.TabIndex = 3;
             this.txtResultadoToken.Text = "";
@@ -132,16 +146,13 @@
             this.lblLerTxt.Text = "Ler Arquivo de Texto";
             this.lblLerTxt.Click += new System.EventHandler(this.lblLerTxt_Click);
             // 
-            // txtPrograma
+            // openFileDialog
             // 
-            this.txtPrograma.BackColor = System.Drawing.SystemColors.Window;
-            this.txtPrograma.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtPrograma.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtPrograma.Location = new System.Drawing.Point(3, 16);
-            this.txtPrograma.Multiline = true;
-            this.txtPrograma.Name = "txtPrograma";
-            this.txtPrograma.Size = new System.Drawing.Size(556, 373);
-            this.txtPrograma.TabIndex = 0;
+            this.openFileDialog.FileName = "openFileDialog1";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // Scanner
             // 
@@ -181,6 +192,8 @@
         private System.Windows.Forms.PictureBox pcLerTxt;
         private MetroFramework.Controls.MetroLabel lblLerTxt;
         private System.Windows.Forms.TextBox txtPrograma;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

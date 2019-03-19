@@ -4,7 +4,7 @@ namespace Scanner.AnaliseLexica.PalavraReservada
 {
     public class PalavrasReservada
     {
-        private string[] palavrasReservadas = { "INT", "STRING", "LONG" };
+        private string[] palavrasReservadas = { "program", "int", "string", "double", "float", "if", "else", "while", "for", "end" };
 
         public PalavrasReservada() { }
 

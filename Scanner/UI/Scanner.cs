@@ -5,6 +5,7 @@ using Scanner.AnaliseLexica;
 using Scanner.TabelaSimbolo;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Scanner
 {
@@ -43,21 +44,22 @@ namespace Scanner
         private void Form1_Load(object sender, EventArgs e)
         {
             bdTabelaSimbolo.DataSource = new List<Simbolo>();
-          
+
+            openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Escolha o Arquivo de texto";
+            openFileDialog.InitialDirectory = @"C:\Users\Maxwell\Documents\";
+            openFileDialog.Filter = "txt files (*.txt)|*.txt";
+            openFileDialog.DefaultExt = "txt";
+
         }
 
         private void btCompilar_Click(object sender, EventArgs e)
         {
-            
-
             Lexer lex = new Lexer(Programa);
             ListaSimbolos = lex.tabelaSimbolos.simbolos;
 
-          
-
-            string token = "";
-
-            while (token != ";")
+            string token = ResultadoToken = "";
+            while (token != "<DELIM, ;>")
             {
                 token = lex.scan();
                 ResultadoToken += token +"\n";
@@ -78,13 +80,15 @@ namespace Scanner
 
         private void LerArquivoTexto()
         {
-            string text;
-            var fileStream = new FileStream(@"C:\Users\Maxwell\Documents\file.txt", FileMode.Open, FileAccess.Read);
-            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Programa = streamReader.ReadToEnd().ToCharArray();
+                string text;
+                var fileStream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
+                using (var streamReader = new StreamReader(fileStream, Encoding.Default))
+                {
+                    Programa = streamReader.ReadToEnd().ToCharArray();
+                }
             }
-
         }
     }
 }

@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnaliseLexica\BaseLexer.cs" />
     <Compile Include="AnaliseLexica\Lexer.cs" />
     <Compile Include="AnaliseLexica\PalavraReservada\PalavrasReservadas.cs" />
     <Compile Include="AnaliseLexica\TabelaSimbolo\Simbolo.cs" />

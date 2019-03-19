@@ -1,27 +1,13 @@
 ﻿using Scanner.AnaliseLexica.PalavraReservada;
 using Scanner.TabelaSimbolo;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Scanner.AnaliseLexica
 {
-    public class Lexer
+    public class Lexer : BaseLexer
     {
-        private char peek;
-        private char[] programafonte;
-        private int i;
-
-        private string[] InicioOperadores = {
-            "+","-",
-            "*","/",
-            ">","<",
-            "=","!"
-        };
-        
-        public TabelaSimbolos tabelaSimbolos;
-
         public Lexer(char[] programa)
         {
             tabelaSimbolos = new TabelaSimbolos();
@@ -52,26 +38,14 @@ namespace Scanner.AnaliseLexica
         {
             String token = "";
 
-            //ignora espaço
-            while (peek == ' ' || peek == '\t')
+            //ignorar
+            while (peek == ' ' || peek == '\t' || peek == '\r' || peek == '\n')
             {
                 nextChar();
             }
+            
+            #region Identificador e Palavra Reservada
 
-            //Numero
-            if (Char.IsDigit(peek))
-            {
-                int v = 0; //vai armezenar o valor do numero
-                do
-                {
-                    v = 10 * v + Convert.ToInt32(peek.ToString(), 10);
-                    nextChar();
-                } while (Char.IsDigit(peek));
-                token = "<NUM, " + v.ToString() + ">";
-                return token;
-            }
-
-            //Identificador
             if (Char.IsLetter(peek))
             {
                 PalavrasReservada palavrasReservada = new PalavrasReservada();
@@ -85,7 +59,7 @@ namespace Scanner.AnaliseLexica
 
                 if (palavrasReservada.isPalavraReservada(lexema.ToString()))
                 {
-                    token = "<" + lexema.ToString() + ", " + lexema.ToString() + ">";
+                    token = "<Palavra reservada, " + lexema.ToString() + ">";
                 }
                 else
                 {
@@ -95,15 +69,51 @@ namespace Scanner.AnaliseLexica
                 return token;
             }
 
-            //Operador
-            if (InicioOperadores.FirstOrDefault(i => i == Char.ToString(peek)) != null)
+            #endregion
+
+            #region Numero
+
+            if (Char.IsDigit(peek))
+            {
+                int v = 0; //vai armezenar o valor do numero
+                do
+                {
+                    v = 10 * v + Convert.ToInt32(peek.ToString(), 10);
+                    nextChar();
+                } while (Char.IsDigit(peek));
+                token = "<NUM, " + v.ToString() + ">";
+                return token;
+            }
+
+            #endregion
+
+            #region Texto entre “”
+
+            if (peek.ToString() == "“")
+            {
+                StringBuilder lexema = new StringBuilder();
+                do
+                {
+                    lexema.Append(peek);
+                    nextChar();
+                } while (peek.ToString() != "”");
+                lexema.Append(peek);
+                nextChar();
+
+                token = "<LITERAL, " + lexema.ToString() + ">";
+
+                return token;
+            }
+
+            #endregion
+
+            #region Operador
+
+            if (BaseOperadores.FirstOrDefault(i => i == Char.ToString(peek)) != null)
             {
                 StringBuilder lexema = new StringBuilder();
                 lexema.Append(peek);
-                if (Char.ToString(peek) == "=" ||
-                    Char.ToString(peek) == "!" ||
-                    Char.ToString(peek) == ">" ||
-                    Char.ToString(peek) == "<" )
+                if (Char.ToString(peek) == "=" || Char.ToString(peek) == ">" || Char.ToString(peek) == "<")
                 {
                     nextChar();
                     if (Char.ToString(peek) == "=")
@@ -117,10 +127,27 @@ namespace Scanner.AnaliseLexica
                     nextChar();
                 }
 
-                token = "<OP, " + lexema.ToString() + ">";
+                token = "<RELOP, " + lexema.ToString() + ">";
 
                 return token;
             }
+
+            #endregion
+
+            #region Delimitadores
+
+            if (Delimitadores.FirstOrDefault(i => i == Char.ToString(peek)) != null)
+            {
+                StringBuilder lexema = new StringBuilder();
+                lexema.Append(peek);
+                nextChar();
+
+                token = "<DELIM, " + lexema.ToString() + ">";
+
+                return token;
+            }
+
+            #endregion
 
             token = peek.ToString();
             return token;
